@@ -1,3 +1,9 @@
 geocoder.db
 notes.md
 
+.Rproj.user
+.Rhistory
+
+addmastr_subset/*
+addresses_geo.csv
+*.Rproj
