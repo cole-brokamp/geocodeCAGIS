@@ -15,4 +15,3 @@ addr_parse <- function(address.string,return.call=FALSE) {
 # addr_parse('4101 Spring Grove Ave Cincinnati OH 45223')
 # addr_parse('737 US 50 Cincinnati OH 45150')
 # addr_parse('9100 I-275 NB TO I-74 EB RAMP Cincinnati OH 45002')
-
