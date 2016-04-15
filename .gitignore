@@ -1,11 +1,8 @@
-geocoder.db
-notes.md
-
 CAGIS/*
+TIGER/*
+
+tl*
 
 .Rproj.user
 .Rhistory
-
-addmastr_subset/*
-addresses_geo.csv
 *.Rproj
