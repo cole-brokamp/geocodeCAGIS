@@ -1,8 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
 CAGIS/*
 TIGER/*
 
 tl*
-
-.Rproj.user
-.Rhistory
-*.Rproj
