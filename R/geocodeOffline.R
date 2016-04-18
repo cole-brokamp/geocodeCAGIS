@@ -27,7 +27,15 @@
 #' @export
 #'
 #' @examples
+#' # single address
 #' geocodeOffline('3333 Burnet Ave, Cincinnati, OH 45229')
+#' geocodeOffline('1600 Pennsylvania Ave NW, Washington, DC 20500')
+#'
+#' # using only CAGIS data
+#' geocodeOffline('3333 Burnet Ave, Cincinnati, OH 45229',TIGER=FALSE)
+#'
+#' # using only TIGER data
+#' geocodeOffline('1600 Pennsylvania Ave NW, Washington, DC 20500',CAGIS=FALSE)
 
 geocodeOffline <- function(address_string,CAGIS=TRUE,TIGER=TRUE){
 
