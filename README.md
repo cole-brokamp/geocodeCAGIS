@@ -21,7 +21,9 @@ The package relies on a python function, which means that both `python` and the 
 
 #### Database Files
 
-The package requires address database files as a `R/sysdata.rda` file. These files are too large to host on GitHub, but contact me (cole dot brokamp at gmail dot com) for access.  Alternatively, build the system data file on your own, using updated CAGIS files or a different vintage of TIGER/Line files. Make sure to `R CMD BATCH --vanilla make_sysdata.R` and rebuild the package with the updated `R/sysdata.rda` if using your own address reference files.
+The package requires address database files as a `R/sysdata.rda` file. These files are too large to host on GitHub, but contact me (cole dot brokamp at gmail dot com) for a copy.  
+
+Alternatively, build the system data file on your own, using updated CAGIS files or a different vintage of TIGER/Line files. Make sure to `R CMD BATCH --vanilla make_sysdata.R` and rebuild the package with the updated `R/sysdata.rda` if using your own address reference files.
 
 *These scripts were built for OS X or Linux. Both take a long time to run... please review the files beforehand.*
 
