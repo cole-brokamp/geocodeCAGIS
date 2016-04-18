@@ -1,16 +1,27 @@
-#' parse an address
+#' addr_parse
 #'
-#' This function utilizes a python script to parse out individual address components from a string.
+#' This function utilizes a python script to parse out individual address
+#' components from a string.
+#'
+#' An address string is parsed for the following components: - `AddressNumber`,
+#' `StreetName`, `StreetPostType`, `PlaceName`, `StateName`, `ZipCode`,
+#' `StreetNamePreType`, `StreetNamePreDirectional`, `AddressNumberSuffix`,
+#' `StreetNamePostDirectional`.  If any of these components are not present in
+#' the string `NA` is returned for that component.
+#'
 #' @param address.string a string to be parsed for address components
 #' @param return.call logical, return the call along with the parsed address?
-#' @param python.system.location string for filepath to python installation to use for addr_parse.py
+#' @param python.system.location string for filepath to python installation to
+#'   use for addr_parse.py
 #'
-#' @return a data.frame with the address components as columns and optionally the submitted address string
+#' @return a data.frame with the address components as columns and optionally
+#'   the submitted address string
 #' @export
 #'
 #' @examples
 #' addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
 #' addr_parse('737 US 50 Cincinnati OH 45150')
+#'
 
 addr_parse <- function(address.string,return.call=FALSE,python.system.location='/Library/Frameworks/Python.framework/Versions/2.7/bin/python') {
   out.json <- system2(python.system.location,c('run/addr_parse.py',shQuote(address.string)),stdout=TRUE)
