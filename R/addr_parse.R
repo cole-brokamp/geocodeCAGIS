@@ -1,0 +1,28 @@
+#' parse an address
+#'
+#' This function utilizes a python script to parse out individual address components from a string.
+#' @param address.string a string to be parsed for address components
+#' @param return.call logical, return the call along with the parsed address?
+#' @param python.system.location string for filepath to python installation to use for addr_parse.py
+#'
+#' @return a data.frame with the address components as columns and optionally the submitted address string
+#' @export
+#'
+#' @examples
+#' addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
+#' addr_parse('737 US 50 Cincinnati OH 45150')
+
+addr_parse <- function(address.string,return.call=FALSE,python.system.location='/Library/Frameworks/Python.framework/Versions/2.7/bin/python') {
+  out.json <- system2(python.system.location,c('run/addr_parse.py',shQuote(address.string)),stdout=TRUE)
+  out.list <- jsonlite::fromJSON(out.json,flatten=FALSE)
+  out.address <- out.list[[1]]
+  out.df <- as.data.frame(out.address,stringsAsFactors=F)
+  out.full <- data.frame('AddressNumber'=NA,'StreetName'=NA,'StreetPostType'=NA,
+                         'PlaceName'=NA,'StateName'=NA,'ZipCode'=NA,
+                         'StreetNamePreType'=NA,'StreetNamePreDirectional'=NA,
+                         'AddressNumberSuffix'=NA,'StreetNamePostDirectional'=NA)
+  for (field in names(out.df)) out.full[1,field] <- out.df[1,field]
+  if (return.call) out.full$call <- address.string
+  return(out.full)
+}
+
