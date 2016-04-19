@@ -1,9 +1,9 @@
-Package: geocodeOffline
+Package: geocodeCAGIS
 Type: Package
-Title: Geocode Offline
-Version: 0.3
+Title: Geocode CAGIS
+Version: 0.1
 Author: Cole Brokamp
 Maintainer: Cole Brokamp <cole.brokamp@gmail.com>
-Description: Uses TIGER/Line files to locally geocode. Useful for HIPPA compliance. Also available to utilize local address database from CAGIS for Cincinnati, Ohio.
+Description: Uses data from CAGIS to geocode local Cincinnati, Ohio address using offline files.
 License: GPL
 LazyData: TRUE
