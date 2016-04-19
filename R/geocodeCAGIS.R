@@ -1,3 +1,42 @@
+#' Geocode an address string without using the internet.
+#'
+#' Geocode an address using offline shapefile from CAGIS. Requires a
+#' \code{R/sysdata.rda} file, see details for more information.
+#'
+#' This function parses a given address string into address components and
+#' attempts to match the address to CAGIS data.  The best match is returned and
+#' the score represents how many insertions/deletions/rearrangements were needed
+#' to match the input string to the address data.
+#'
+#' The \code{sysdata.rda} file is available via personal communication (cole dot
+#' brokamp at gmail dot com). Alternatively, build the system data file on your
+#' own, using updated CAGIS files or a different vintage of TIGER/Line files.
+#' See \code{README.md} for details on this operation. Make sure to `R CMD BATCH
+#' --vanilla make_sysdata.R` and rebuild the package if using your own address
+#' reference files.
+#'
+#' This function will return NA if the zip code of the address string
+#' does not begin with 450, 451, or 452.
+#'
+#' @param address_string a single string that will be geocoded
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' geocodeOffline('3333 Burnet Ave, Cincinnati, OH 45229')
+
+
+geocodeOffline <- function(address_string,CAGIS=TRUE,TIGER=TRUE){
+
+  if (!class(address_string)) stop('address_string must be a character string')
+
+  p.address <- addr_parse(address_string)
+
+  if (CAGIS) out <- CAGIS(p.address)
+
+}
+
 CAGIS_match <- function(addr_string) {
   addr_string <- tolower(addr_string)
   address.p <- addr_parse(addr_string)
@@ -38,7 +77,3 @@ CAGIS_match <- function(addr_string) {
 
 CAGIS_match('6655 Hitching Post Lane Cincinnati OH 45230')
 CAGIS_match('1456 Main St. 23566')
-
-
-# todo
-# choose to keep CAGIS match based on a certain threshold?
