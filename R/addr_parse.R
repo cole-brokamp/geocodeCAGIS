@@ -23,8 +23,8 @@
 #' addr_parse('737 US 50 Cincinnati OH 45150')
 #'
 
-addr_parse <- function(address.string,return.call=FALSE,python.system.location='/Library/Frameworks/Python.framework/Versions/2.7/bin/python') {
-  out.json <- system2(python.system.location,c('run/addr_parse.py',shQuote(address.string)),stdout=TRUE)
+addr_parse <- function(address.string,python.system.location='/Library/Frameworks/Python.framework/Versions/2.7/bin/python') {
+  out.json <- system2(python.system.location,c('R/addr_parse.py',shQuote(address.string)),stdout=TRUE)
   out.list <- jsonlite::fromJSON(out.json,flatten=FALSE)
   out.address <- out.list[[1]]
   out.df <- as.data.frame(out.address,stringsAsFactors=F)
@@ -33,7 +33,6 @@ addr_parse <- function(address.string,return.call=FALSE,python.system.location='
                          'StreetNamePreType'=NA,'StreetNamePreDirectional'=NA,
                          'AddressNumberSuffix'=NA,'StreetNamePostDirectional'=NA)
   for (field in names(out.df)) out.full[1,field] <- out.df[1,field]
-  if (return.call) out.full$call <- address.string
   return(out.full)
 }
 

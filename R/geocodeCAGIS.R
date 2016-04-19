@@ -68,12 +68,13 @@ CAGIS_match <- function(addr_string) {
   dist.matrix <- as.data.frame(dist.matrix)
   dist.matrix$total.weighted.distance <- apply(dist.matrix,1,sum)
   best.candidate <- which.min(dist.matrix$total.weighted.distance)
-  return(data.frame('lat'=candidates[best.candidate,'LATITUDE'],
-                    'lon'=candidates[best.candidate,'LONGITUDE'],
-                    'method' = 'CAGIS',
-                    'score' = dist.matrix[best.candidate,'total.weighted.distance'])
-  )
+  out <- data.frame('lat'=candidates[best.candidate,'LATITUDE'],
+                    'lon'=candidates[best.candidate,'LONGITUDE'])
+  if (verbose) {
+    out$method <- 'CAGIS'
+    out$score <- dist.matrix[best.candidate,'total.weighted.distance']
+  }
+  if (return.call) out$call <- addr_string
+  return(out)
 }
 
-CAGIS_match('6655 Hitching Post Lane Cincinnati OH 45230')
-CAGIS_match('1456 Main St. 23566')
