@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+R/sysdata.rda
 
 CAGIS/*
 _dont_track/*
