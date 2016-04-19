@@ -9,9 +9,7 @@
 #'
 #' The \code{sysdata.rda} file comes bundled with the package. Alternatively,
 #' build the system data file on your own, using updated CAGIS files. See
-#' the vignette for details on this operation. Make sure to `R CMD BATCH
-#' --vanilla make_sysdata.R` and rebuild the package if using your own address
-#' reference files.
+#' the vignette for details on this operation.
 #'
 #' This function will generate an error if the zip code of the address string
 #' does not begin with 450, 451, or 452.
@@ -23,13 +21,14 @@
 #' @param ... other arguments to \code{addr_parse} such as
 #'   \code{python.system.location}
 #'
-#' @return data.frame with lat/lon coords and optionally method score
+#' @return data.frame with lat/lon coords and optionally method score, original call, or matched CAGIS record
 #' @export
 #'
 #' @examples
-#' geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',cole=TRUE)
-#' geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',return.score=TRUE,return.call=TRUE,return.match=TRUE,cole=TRUE)
-#' geocodeCAGIS('1456 Main St. 23566',cole=TRUE)
+#' # geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
+#' # geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',return.score=TRUE,return.call=TRUE,return.match=TRUE)
+#' ## will generate error:
+#' #geocodeCAGIS('1456 Main St. 23566',cole=TRUE)
 
 geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return.match=FALSE,...) {
 

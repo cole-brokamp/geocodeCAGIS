@@ -14,16 +14,16 @@ geocodeCAGIS(addr_string, return.score = FALSE, return.call = FALSE,
 
 \item{return.match}{logical, return the best address text match from CAGIS?}
 
-\item{...}{other arguments to \code{addr_parse} such as \code{python.system.location}}
+\item{...}{other arguments to \code{addr_parse} such as
+\code{python.system.location}}
 
 \item{address_string}{a single string that will be geocoded}
 }
 \value{
-data.frame with lat/lon coords and optionally method score
+data.frame with lat/lon coords and optionally method score, original call, or matched CAGIS record
 }
 \description{
-Geocode an address using offline shapefile from CAGIS. Requires a
-\code{R/sysdata.rda} file, see details for more information.
+Geocode an address using offline shapefile from CAGIS.
 }
 \details{
 This function parses a given address string into address components and
@@ -31,19 +31,17 @@ attempts to match the address to CAGIS data.  The best match is returned and
 the score represents how many insertions/deletions/rearrangements were needed
 to match the input string to the address data.
 
-The \code{sysdata.rda} file is available via personal communication (cole dot
-brokamp at gmail dot com). Alternatively, build the system data file on your
-own, using updated CAGIS files or a different vintage of TIGER/Line files.
-See \code{README.md} for details on this operation. Make sure to `R CMD BATCH
---vanilla make_sysdata.R` and rebuild the package if using your own address
-reference files.
+The \code{sysdata.rda} file comes bundled with the package. Alternatively,
+build the system data file on your own, using updated CAGIS files. See
+the vignette for details on this operation.
 
 This function will generate an error if the zip code of the address string
 does not begin with 450, 451, or 452.
 }
 \examples{
-geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',cole=TRUE)
-geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',return.score=TRUE,return.call=TRUE,return.match=TRUE,cole=TRUE)
-geocodeCAGIS('1456 Main St. 23566',cole=TRUE)
+# geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
+# geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',return.score=TRUE,return.call=TRUE,return.match=TRUE)
+## will generate error:
+#geocodeCAGIS('1456 Main St. 23566',cole=TRUE)
 }
 

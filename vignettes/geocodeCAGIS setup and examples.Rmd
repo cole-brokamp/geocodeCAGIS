@@ -22,19 +22,17 @@ Install the package by running the following in `R`:
 
 #### Python
 
-The package relies on a call to python to parse the address, which means that both `python` and the `usaddress` python library must be installed (`pip install usaddress`). 
-
-The function will attempt to guess your python location using a call to the system (`whereis python`). You can specify a different location for the python executable using the `python.system.location` argument in the `addr_parse.R` function. 
+The package relies on a call to python to parse the address, which means that both `python` and the `usaddress` python library must be installed (`pip install usaddress`). Although the default path (`/usr/bin/python`) will work on most unix machines, it is possible to  specify a different location for the python executable using the `python.system.location` argument in the `addr_parse.R` function. 
 
 #### Database Files
 
 The package requires an address database file as a `R/sysdata.rda` file, which is included with the package.
 
-Alternatively, you can build the system data file on your own, using updated CAGIS files by running `bash build_CAGIS_address_file.sh`. This script will download the CAGIS master address file, unzip it, and extract the shapefile to a CSV. Then `make_CAGIS_database.R` is called to parse all listed CAGIS addresses and save as a `.RData` file. Unused files are deleted afterwards. 
+Alternatively, you can build the system data file on your own, using updated CAGIS files.  Find the path to the folder which contains these scripts by running `system.file(file.path('extdata'),package='geocodeCAGIS',mustWork=T)` in R after loading the `geocodeCAGIS` package. By running `bash build_CAGIS_address_file.sh`, the script will download the CAGIS master address file, unzip it, and extract the shapefile to a CSV. Then `make_CAGIS_database.R` is called to parse all listed CAGIS addresses and save as a `.RData` file. Unused files are deleted afterwards. 
 
 Make sure to `R CMD BATCH --vanilla make_sysdata.R` and rebuild the package with the updated `R/sysdata.rda` if using your own address reference files.
 
-*These scripts were built for OS X or Linux. Both take a long time to run... please review the files beforehand.*
+*Warning: These scripts were built for OS X or Linux. Both take a long time to run... please review the files beforehand. Making your own CAGIS database is not for the faint of heart.*
 
 ## Geocoding
 
