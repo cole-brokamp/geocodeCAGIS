@@ -4,14 +4,16 @@
 \alias{addr_parse}
 \title{addr_parse}
 \usage{
-addr_parse(address.string,
-  python.system.location = "/Library/Frameworks/Python.framework/Versions/2.7/bin/python")
+addr_parse(address.string, python.system.location = system("whereis python"),
+  cole = FALSE)
 }
 \arguments{
 \item{address.string}{a string to be parsed for address components}
 
 \item{python.system.location}{string for filepath to python installation to
 use for addr_parse.py}
+
+\item{cole}{logical, convenience argument to set my python location on my local machine}
 
 \item{return.call}{logical, return the call along with the parsed address?}
 }
@@ -31,8 +33,9 @@ An address string is parsed for the following components: - `AddressNumber`,
 the string `NA` is returned for that component.
 }
 \examples{
-addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
-addr_parse('737 US 50 Cincinnati OH 45150')
-
+addr_parse('3333 Burnet Ave, Cincinnati, OH 45229',cole=TRUE)
+addr_parse('737 US 50 Cincinnati OH 45150',cole=TRUE)
+addr_parse('3333 Burnet Ave, Cincinnati, OH 45229',
+python.system.location='/Library/Frameworks/Python.framework/Versions/2.7/bin/python')
 }
 

@@ -13,17 +13,20 @@
 #' @param return.call logical, return the call along with the parsed address?
 #' @param python.system.location string for filepath to python installation to
 #'   use for addr_parse.py
+#' @param cole logical, convenience argument to set my python location on my local machine
 #'
 #' @return a data.frame with the address components as columns and optionally
 #'   the submitted address string
 #' @export
 #'
 #' @examples
-#' addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
-#' addr_parse('737 US 50 Cincinnati OH 45150')
-#'
+#' addr_parse('3333 Burnet Ave, Cincinnati, OH 45229',cole=TRUE)
+#' addr_parse('737 US 50 Cincinnati OH 45150',cole=TRUE)
+#' addr_parse('3333 Burnet Ave, Cincinnati, OH 45229',
+#' python.system.location='/Library/Frameworks/Python.framework/Versions/2.7/bin/python')
 
-addr_parse <- function(address.string,python.system.location='/Library/Frameworks/Python.framework/Versions/2.7/bin/python') {
+addr_parse <- function(address.string,python.system.location=system('whereis python'),cole=FALSE) {
+  if (cole) python.system.location <- '/Library/Frameworks/Python.framework/Versions/2.7/bin/python'
   out.json <- system2(python.system.location,c('R/addr_parse.py',shQuote(address.string)),stdout=TRUE)
   out.list <- jsonlite::fromJSON(out.json,flatten=FALSE)
   out.address <- out.list[[1]]

@@ -5,7 +5,7 @@
 \title{Geocode Cincinnati, OH area address using offline exact location files}
 \usage{
 geocodeCAGIS(addr_string, return.score = FALSE, return.call = FALSE,
-  return.match = FALSE)
+  return.match = FALSE, ...)
 }
 \arguments{
 \item{return.score}{logical, return method and matching score?}
@@ -13,6 +13,8 @@ geocodeCAGIS(addr_string, return.score = FALSE, return.call = FALSE,
 \item{return.call}{logical, return the original address string?}
 
 \item{return.match}{logical, return the best address text match from CAGIS?}
+
+\item{...}{other arguments to \code{addr_parse} such as \code{python.system.location}}
 
 \item{address_string}{a single string that will be geocoded}
 }
@@ -40,8 +42,8 @@ This function will generate an error if the zip code of the address string
 does not begin with 450, 451, or 452.
 }
 \examples{
-geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
-geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',verbose=TRUE,return.call=TRUE)
-geocodeCAGIS('1456 Main St. 23566')
+geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',cole=TRUE)
+geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',return.score=TRUE,return.call=TRUE,return.match=TRUE,cole=TRUE)
+geocodeCAGIS('1456 Main St. 23566',cole=TRUE)
 }
 

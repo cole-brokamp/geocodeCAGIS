@@ -22,21 +22,22 @@
 #' @param return.score logical, return method and matching score?
 #' @param return.call logical, return the original address string?
 #' @param return.match logical, return the best address text match from CAGIS?
+#' @param ... other arguments to \code{addr_parse} such as \code{python.system.location}
 #'
 #' @return data.frame with lat/lon coords and optionally method score
 #' @export
 #'
 #' @examples
-#' geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
-#' geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',verbose=TRUE,return.call=TRUE)
-#' geocodeCAGIS('1456 Main St. 23566')
+#' geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',cole=TRUE)
+#' geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',return.score=TRUE,return.call=TRUE,return.match=TRUE,cole=TRUE)
+#' geocodeCAGIS('1456 Main St. 23566',cole=TRUE)
 
-geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return.match=FALSE) {
+geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return.match=FALSE,...) {
 
   stopifnot(class(addr_string)=='character')
 
   addr_string <- tolower(addr_string)
-  address.p <- addr_parse(addr_string)
+  address.p <- addr_parse(addr_string,...)
 
   stopifnot(substr(address.p$ZipCode,1,3) %in% c(450,451,452))
 
@@ -70,7 +71,7 @@ geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return
     out$score <- dist.matrix[best.candidate,'total.weighted.distance']
   }
   if (return.call) out$call <- addr_string
-  if (return.match) out$match <- paste(candidates[best.candidate,names(address.p)])
+  if (return.match) out$match <- paste(candidates[best.candidate,names(address.p)],collapse=' ')
   return(out)
 }
 
