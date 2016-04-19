@@ -15,11 +15,13 @@
 #' --vanilla make_sysdata.R` and rebuild the package if using your own address
 #' reference files.
 #'
-#' This function will return NA if the zip code of the address string
+#' This function will generate an error if the zip code of the address string
 #' does not begin with 450, 451, or 452.
 #'
 #' @param address_string a single string that will be geocoded
-#' @param verbose logical, return method and matching score?
+#' @param return.score logical, return method and matching score?
+#' @param return.call logical, return the original address string?
+#' @param return.match logical, return the best address text match from CAGIS?
 #'
 #' @return data.frame with lat/lon coords and optionally method score
 #' @export
@@ -29,7 +31,7 @@
 #' geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',verbose=TRUE,return.call=TRUE)
 #' geocodeCAGIS('1456 Main St. 23566')
 
-geocodeCAGIS <- function(addr_string,verbose=FALSE,return.call=FALSE) {
+geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return.match=FALSE) {
 
   stopifnot(class(addr_string)=='character')
 
@@ -63,11 +65,12 @@ geocodeCAGIS <- function(addr_string,verbose=FALSE,return.call=FALSE) {
   best.candidate <- which.min(dist.matrix$total.weighted.distance)
   out <- data.frame('lat'=candidates[best.candidate,'LATITUDE'],
                     'lon'=candidates[best.candidate,'LONGITUDE'])
-  if (verbose) {
+  if (return.score) {
     out$method <- 'CAGIS'
     out$score <- dist.matrix[best.candidate,'total.weighted.distance']
   }
   if (return.call) out$call <- addr_string
+  if (return.match) out$match <- paste(candidates[best.candidate,names(address.p)])
   return(out)
 }
 

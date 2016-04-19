@@ -4,10 +4,15 @@
 \alias{geocodeCAGIS}
 \title{Geocode Cincinnati, OH area address using offline exact location files}
 \usage{
-geocodeCAGIS(addr_string, verbose = FALSE, return.call = FALSE)
+geocodeCAGIS(addr_string, return.score = FALSE, return.call = FALSE,
+  return.match = FALSE)
 }
 \arguments{
-\item{verbose}{logical, return method and matching score?}
+\item{return.score}{logical, return method and matching score?}
+
+\item{return.call}{logical, return the original address string?}
+
+\item{return.match}{logical, return the best address text match from CAGIS?}
 
 \item{address_string}{a single string that will be geocoded}
 }
@@ -31,7 +36,7 @@ See \code{README.md} for details on this operation. Make sure to `R CMD BATCH
 --vanilla make_sysdata.R` and rebuild the package if using your own address
 reference files.
 
-This function will return NA if the zip code of the address string
+This function will generate an error if the zip code of the address string
 does not begin with 450, 451, or 452.
 }
 \examples{
