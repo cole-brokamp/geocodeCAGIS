@@ -7,8 +7,3 @@ Maintainer: Cole Brokamp <cole.brokamp@gmail.com>
 Description: Uses TIGER/Line files to locally geocode. Useful for HIPPA compliance. Also available to utilize local address database from CAGIS for Cincinnati, Ohio.
 License: GPL
 LazyData: TRUE
-Depends:
-  R (>= 3.1.2)
-Imports:
-  rgdal
-  rgeos
