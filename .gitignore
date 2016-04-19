@@ -2,7 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-R/sysdata.rda
 .addr_parse.py
 
 CAGIS/*
