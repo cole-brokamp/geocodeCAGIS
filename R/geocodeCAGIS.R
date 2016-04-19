@@ -1,4 +1,4 @@
-#' Geocode an address string without using the internet.
+#' Geocode Cincinnati, OH area address using offline exact location files
 #'
 #' Geocode an address using offline shapefile from CAGIS. Requires a
 #' \code{R/sysdata.rda} file, see details for more information.
@@ -19,31 +19,24 @@
 #' does not begin with 450, 451, or 452.
 #'
 #' @param address_string a single string that will be geocoded
+#' @param verbose logical, return method and matching score?
 #'
-#' @return
+#' @return data.frame with lat/lon coords and optionally method score
 #' @export
 #'
 #' @examples
-#' geocodeOffline('3333 Burnet Ave, Cincinnati, OH 45229')
+#' geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
+#' geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',verbose=TRUE,return.call=TRUE)
+#' geocodeCAGIS('1456 Main St. 23566')
 
+geocodeCAGIS <- function(addr_string,verbose=FALSE,return.call=FALSE) {
 
-geocodeOffline <- function(address_string,CAGIS=TRUE,TIGER=TRUE){
+  stopifnot(class(addr_string)=='character')
 
-  if (!class(address_string)) stop('address_string must be a character string')
-
-  p.address <- addr_parse(address_string)
-
-  if (CAGIS) out <- CAGIS(p.address)
-
-}
-
-CAGIS_match <- function(addr_string) {
   addr_string <- tolower(addr_string)
   address.p <- addr_parse(addr_string)
 
-  # if zip code does not match areas covered by CAGIS, then completely skip
-  valid.zips.prefixes <- c(450,451,452)
-  if (!substr(address.p$ZipCode,1,3) %in% valid.zips.prefixes) return(NA)
+  stopifnot(substr(address.p$ZipCode,1,3) %in% c(450,451,452))
 
   # remove city and state
   address.p$PlaceName <- NULL
@@ -77,4 +70,5 @@ CAGIS_match <- function(addr_string) {
   if (return.call) out$call <- addr_string
   return(out)
 }
+
 
