@@ -1,17 +1,15 @@
 #' Geocode Cincinnati, OH area address using offline exact location files
 #'
-#' Geocode an address using offline shapefile from CAGIS. Requires a
-#' \code{R/sysdata.rda} file, see details for more information.
+#' Geocode an address using offline shapefile from CAGIS.
 #'
 #' This function parses a given address string into address components and
 #' attempts to match the address to CAGIS data.  The best match is returned and
 #' the score represents how many insertions/deletions/rearrangements were needed
 #' to match the input string to the address data.
 #'
-#' The \code{sysdata.rda} file is available via personal communication (cole dot
-#' brokamp at gmail dot com). Alternatively, build the system data file on your
-#' own, using updated CAGIS files or a different vintage of TIGER/Line files.
-#' See \code{README.md} for details on this operation. Make sure to `R CMD BATCH
+#' The \code{sysdata.rda} file comes bundled with the package. Alternatively,
+#' build the system data file on your own, using updated CAGIS files. See
+#' the vignette for details on this operation. Make sure to `R CMD BATCH
 #' --vanilla make_sysdata.R` and rebuild the package if using your own address
 #' reference files.
 #'
@@ -22,7 +20,8 @@
 #' @param return.score logical, return method and matching score?
 #' @param return.call logical, return the original address string?
 #' @param return.match logical, return the best address text match from CAGIS?
-#' @param ... other arguments to \code{addr_parse} such as \code{python.system.location}
+#' @param ... other arguments to \code{addr_parse} such as
+#'   \code{python.system.location}
 #'
 #' @return data.frame with lat/lon coords and optionally method score
 #' @export

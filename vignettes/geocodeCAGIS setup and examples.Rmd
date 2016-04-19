@@ -28,9 +28,9 @@ The function will attempt to guess your python location using a call to the syst
 
 #### Database Files
 
-The package requires an address database file as a `R/sysdata.rda` file. This file is too large to host on GitHub, but contact me (cole dot brokamp at gmail dot com) for a copy.  
+The package requires an address database file as a `R/sysdata.rda` file, which is included with the package.
 
-Alternatively, build the system data file on your own, using updated CAGIS files by running `bash build_CAGIS_address_file.sh`. This script will download the CAGIS master address file, unzip it, and extract the shapefile to a CSV. Then `make_CAGIS_database.R` is called to parse all listed CAGIS addresses and save as a `.RData` file. Unused files are deleted afterwards. 
+Alternatively, you can build the system data file on your own, using updated CAGIS files by running `bash build_CAGIS_address_file.sh`. This script will download the CAGIS master address file, unzip it, and extract the shapefile to a CSV. Then `make_CAGIS_database.R` is called to parse all listed CAGIS addresses and save as a `.RData` file. Unused files are deleted afterwards. 
 
 Make sure to `R CMD BATCH --vanilla make_sysdata.R` and rebuild the package with the updated `R/sysdata.rda` if using your own address reference files.
 
