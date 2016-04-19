@@ -3,6 +3,7 @@
 .RData
 .Ruserdata
 R/sysdata.rda
+.addr_parse.py
 
 CAGIS/*
 _dont_track/*

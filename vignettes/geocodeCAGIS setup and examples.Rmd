@@ -1,5 +1,5 @@
 ---
-title: "geocodeCAGIS setup and examples"
+title: "geocodeCAGIS Setup and Examples"
 author: "Cole Brokamp"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -8,14 +8,9 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-# geocodeCAGIS
-
-> Geocode Cincinnati, OH area address using offline exact location files
-
 ## Overview
 
-This package is designed to geocode address strings that are private health information.  Most institutional review boards will not allow the use of online geocoders. This program maintains HIPPA compliance by exact address matching using data from the Cincinnati Area Geographic Information System ([CAGIS](http://cagismaps.hamilton-co.org/cagisportal)). This drastically improves geocoding, but is only available for addresses that have a zipcode beginning with 450, 451, or 452. 
+This package is designed to geocode address strings that are private health information.  Most institutional review boards will not allow the use of online geocoders. This program maintains HIPPA compliance by exact address matching using offline data from the Cincinnati Area Geographic Information System ([CAGIS](http://cagismaps.hamilton-co.org/cagisportal)). This drastically improves geocoding, but is only available for addresses that have a zipcode beginning with 450, 451, or 452. 
     
 ## Installing
 
@@ -27,7 +22,7 @@ Install the package by running the following in `R`:
 
 #### Python
 
-The package relies on a python function, which means that both `python` and the `usaddress` python library must be installed (`pip install usaddress`). 
+The package relies on a call to python to parse the address, which means that both `python` and the `usaddress` python library must be installed (`pip install usaddress`). 
 
 The function will attempt to guess your python location using a call to the system (`whereis python`). You can specify a different location for the python executable using the `python.system.location` argument in the `addr_parse.R` function. 
 

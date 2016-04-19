@@ -13,7 +13,8 @@ addr_parse(address.string, python.system.location = system("whereis python"),
 \item{python.system.location}{string for filepath to python installation to
 use for addr_parse.py}
 
-\item{cole}{logical, convenience argument to set my python location on my local machine}
+\item{cole}{logical, convenience argument to set my python location on my
+local machine}
 
 \item{return.call}{logical, return the call along with the parsed address?}
 }
@@ -31,6 +32,10 @@ An address string is parsed for the following components: - `AddressNumber`,
 `StreetNamePreType`, `StreetNamePreDirectional`, `AddressNumberSuffix`,
 `StreetNamePostDirectional`.  If any of these components are not present in
 the string `NA` is returned for that component.
+
+Because it uses a python script to parse the address, it will make a copy of
+this file (\code{.addr_parse.py}) if one does not already exist in the
+working directory.
 }
 \examples{
 addr_parse('3333 Burnet Ave, Cincinnati, OH 45229',cole=TRUE)
