@@ -9,3 +9,6 @@ Description: Uses data from CAGIS to geocode local Cincinnati, Ohio address
 License: GPL
 LazyData: TRUE
 RoxygenNote: 5.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr

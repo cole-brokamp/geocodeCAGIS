@@ -6,5 +6,5 @@ R/sysdata.rda
 
 CAGIS/*
 _dont_track/*
-
 tl*
+inst/doc
