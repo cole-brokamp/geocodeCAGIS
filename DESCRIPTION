@@ -11,5 +11,6 @@ LazyData: TRUE
 RoxygenNote: 5.0.1
 Suggests: knitr,
     rmarkdown
-Requires: fuzzyjoin
+Requires: fuzzyjoin,
+    findpython
 VignetteBuilder: knitr

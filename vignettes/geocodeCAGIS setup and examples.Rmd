@@ -22,7 +22,7 @@ Install the package by running the following in `R`:
 
 #### Python
 
-The package relies on a call to python to parse the address, which means that both `python` and the `usaddress` python library must be installed (`pip install usaddress`). Although the default path (`/usr/bin/python`) will work on most unix machines, it is possible to  specify a different location for the python executable using the `python.system.location` argument in the `addr_parse.R` function. 
+The package relies on a call to python to parse the address, which means that both `python` and the `usaddress` python library must be installed (`pip install usaddress`).
 
 #### Database Files
 
@@ -45,12 +45,10 @@ Make sure to `R CMD BATCH --vanilla make_sysdata.R` and rebuild the package with
 
 #### Example usage
 
-Here, I am using the argument `cole=T` to specify my own executable path for python for my local machine. This should usually be omitted, in which case it will default to `FALSE` and try to guess the python path automatically.
-
 Single address with only coordinates:
 ```{r}
 library(geocodeCAGIS)
-geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',cole=T)
+geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
 ```
 
 Include all optional output:
@@ -58,14 +56,12 @@ Include all optional output:
 geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',
              return.score=TRUE,
              return.call=TRUE,
-             return.match=TRUE,
-             cole=T)
+             return.match=TRUE)
 ```
 
 Specify an alternate python executable path:
 ```{r}
-geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',
-             python.system.location='/Library/Frameworks/Python.framework/Versions/2.7/bin/python')
+geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
 ```
 
 ## Batch Geocoding

@@ -2,24 +2,15 @@
 % Please edit documentation in R/addr_parse.R
 \name{addr_parse}
 \alias{addr_parse}
-\title{addr_parse}
+\title{Parse an address string into individual components.}
 \usage{
-addr_parse(address.string, python.system.location = "/usr/bin/python",
-  cole = FALSE)
+addr_parse(address.string)
 }
 \arguments{
 \item{address.string}{a string to be parsed for address components}
-
-\item{python.system.location}{string for filepath to python installation}
-
-\item{cole}{logical, convenience argument to set my python location on my
-local machine}
-
-\item{return.call}{logical, return the call along with the parsed address?}
 }
 \value{
-a data.frame with the address components as columns and optionally
-  the submitted address string
+a data.frame with the address components
 }
 \description{
 This function utilizes a python script to parse out individual address
@@ -31,11 +22,14 @@ An address string is parsed for the following components: - `AddressNumber`,
 `StreetNamePreType`, `StreetNamePreDirectional`, `AddressNumberSuffix`,
 `StreetNamePostDirectional`.  If any of these components are not present in
 the string `NA` is returned for that component.
+
+This function depends on having a sufficient python binary installed and
+having the module `usaddress` available. Use `pip install usaddress` to
+install this module after python is installed.
 }
 \examples{
-addr_parse('3333 Burnet Ave, Cincinnati, OH 45229',cole=TRUE)
-addr_parse('737 US 50 Cincinnati OH 45150',cole=TRUE)
-addr_parse('3333 Burnet Ave, Cincinnati, OH 45229',
-python.system.location='/Library/Frameworks/Python.framework/Versions/2.7/bin/python')
+addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
+addr_parse('737 US 50 Cincinnati OH 45150')
+addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
 }
 

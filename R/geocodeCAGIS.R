@@ -14,12 +14,13 @@
 #' This function will return NA if the zip code of the address string
 #' does not begin with 450, 451, or 452.
 #'
+#' Requires a sufficient python binary and the usaddress module.
+#' See \link{addr_parse} for more details.
+#'
 #' @param address_string a single string that will be geocoded
 #' @param return.score logical, return method and matching score?
 #' @param return.call logical, return the original address string?
 #' @param return.match logical, return the best address text match from CAGIS?
-#' @param ... other arguments to \code{addr_parse} such as
-#'   \code{python.system.location}
 #'
 #' @return data.frame with lat/lon coords and optionally method score, original call, or matched CAGIS record
 #' @export
@@ -29,12 +30,12 @@
 #' # geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',return.score=TRUE,return.call=TRUE,return.match=TRUE)
 #' #geocodeCAGIS('1456 Main St. 23566',cole=TRUE)
 
-geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return.match=FALSE,...) {
+geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return.match=FALSE) {
 
   stopifnot(class(addr_string)=='character')
 
   addr_string <- tolower(addr_string)
-  address.p <- addr_parse(addr_string,...)
+  address.p <- addr_parse(addr_string)
 
   if(!substr(address.p$ZipCode,1,3) %in% c(450,451,452)) return(NA)
 

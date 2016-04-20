@@ -1,4 +1,4 @@
-#' addr_parse
+#' Parse an address string into individual components.
 #'
 #' This function utilizes a python script to parse out individual address
 #' components from a string.
@@ -9,27 +9,25 @@
 #' `StreetNamePostDirectional`.  If any of these components are not present in
 #' the string `NA` is returned for that component.
 #'
-#' @param address.string a string to be parsed for address components
-#' @param return.call logical, return the call along with the parsed address?
-#' @param python.system.location string for filepath to python installation
-#' @param cole logical, convenience argument to set my python location on my
-#'   local machine
+#' This function depends on having a sufficient python binary installed and
+#' having the module `usaddress` available. Use `pip install usaddress` to
+#' install this module after python is installed.
 #'
-#' @return a data.frame with the address components as columns and optionally
-#'   the submitted address string
+#' @param address.string a string to be parsed for address components
+#'
+#' @return a data.frame with the address components
 #' @export
 #'
 #' @examples
-#' addr_parse('3333 Burnet Ave, Cincinnati, OH 45229',cole=TRUE)
-#' addr_parse('737 US 50 Cincinnati OH 45150',cole=TRUE)
-#' addr_parse('3333 Burnet Ave, Cincinnati, OH 45229',
-#' python.system.location='/Library/Frameworks/Python.framework/Versions/2.7/bin/python')
+#' addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
+#' addr_parse('737 US 50 Cincinnati OH 45150')
+#' addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
 
-addr_parse <- function(address.string,python.system.location='/usr/bin/python',cole=FALSE) {
-  if (cole) python.system.location <- '/Library/Frameworks/Python.framework/Versions/2.7/bin/python'
-
+addr_parse <- function(address.string) {
+  py.bin.loc <- findpython::find_python_cmd(required_modules='usaddress',
+                                            error_message='Could not find a python binary with the usaddress module available. Make sure to install python and then use `pip install usaddress` to install the module.')
   py.file.loc <- system.file(file.path('extdata/addr_parse.py'),package='geocodeCAGIS',mustWork=T)
-  out.json <- system2(python.system.location,c(py.file.loc,shQuote(address.string)),stdout=TRUE)
+  out.json <- system2(py.bin.loc,c(py.file.loc,shQuote(address.string)),stdout=TRUE)
   out.list <- jsonlite::fromJSON(out.json,flatten=FALSE)
   out.address <- out.list[[1]]
   out.df <- as.data.frame(out.address,stringsAsFactors=F)
