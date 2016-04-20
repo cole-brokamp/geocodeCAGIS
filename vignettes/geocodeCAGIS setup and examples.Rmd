@@ -68,4 +68,19 @@ geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',
              python.system.location='/Library/Frameworks/Python.framework/Versions/2.7/bin/python')
 ```
 
+## Batch Geocoding
+
+This package comes with an executable `Rscript` file that can be run to batch geocode a CSV file.  Find the location of the file by running the following in R:
+```{r}
+system.file(file.path('extdata/batch_geocodeCAGIS.R'),package='geocodeCAGIS')
+```
+
+Make sure to `chmod` the script to make it executable and then look over the options:
+
+```{r, engine='bash'}
+chmod +x /Library/Frameworks/R.framework/Versions/3.2/Resources/library/geocodeCAGIS/extdata/batch_geocodeCAGIS.R
+/Library/Frameworks/R.framework/Versions/3.2/Resources/library/geocodeCAGIS/extdata/batch_geocodeCAGIS.R --help
+```
+
+Although not evaluated here, the script will print out its status and then save the geocode information along with the original file as a CSV and also SHP file.
 

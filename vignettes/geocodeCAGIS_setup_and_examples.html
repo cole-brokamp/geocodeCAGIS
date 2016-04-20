@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Cole Brokamp" />
+
+<meta name="date" content="2016-04-20" />
+
+<title>geocodeCAGIS Setup and Examples</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="fluid-row" id="header">
+
+
+<h1 class="title">geocodeCAGIS Setup and Examples</h1>
+<h4 class="author"><em>Cole Brokamp</em></h4>
+<h4 class="date"><em>2016-04-20</em></h4>
+
+</div>
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>This package is designed to geocode address strings that are private health information. Most institutional review boards will not allow the use of online geocoders. This program maintains HIPPA compliance by exact address matching using offline data from the Cincinnati Area Geographic Information System (<a href="http://cagismaps.hamilton-co.org/cagisportal">CAGIS</a>). This drastically improves geocoding, but is only available for addresses that have a zipcode beginning with 450, 451, or 452.</p>
+</div>
+<div id="installing" class="section level2">
+<h2>Installing</h2>
+<div id="r-package" class="section level4">
+<h4>R Package</h4>
+<p>Install the package by running the following in <code>R</code>:</p>
+<p><code>devtools::install_github('cole-brokamp','geocodeCAGIS')</code></p>
+</div>
+<div id="python" class="section level4">
+<h4>Python</h4>
+<p>The package relies on a call to python to parse the address, which means that both <code>python</code> and the <code>usaddress</code> python library must be installed (<code>pip install usaddress</code>). Although the default path (<code>/usr/bin/python</code>) will work on most unix machines, it is possible to specify a different location for the python executable using the <code>python.system.location</code> argument in the <code>addr_parse.R</code> function.</p>
+</div>
+<div id="database-files" class="section level4">
+<h4>Database Files</h4>
+<p>The package requires an address database file as a <code>R/sysdata.rda</code> file, which is included with the package.</p>
+<p>Alternatively, you can build the system data file on your own, using updated CAGIS files. Find the path to the folder which contains these scripts by running <code>system.file(file.path('extdata'),package='geocodeCAGIS',mustWork=T)</code> in R after loading the <code>geocodeCAGIS</code> package. By running <code>bash build_CAGIS_address_file.sh</code>, the script will download the CAGIS master address file, unzip it, and extract the shapefile to a CSV. Then <code>make_CAGIS_database.R</code> is called to parse all listed CAGIS addresses and save as a <code>.RData</code> file. Unused files are deleted afterwards.</p>
+<p>Make sure to <code>R CMD BATCH --vanilla make_sysdata.R</code> and rebuild the package with the updated <code>R/sysdata.rda</code> if using your own address reference files.</p>
+<p><em>Warning: These scripts were built for OS X or Linux. Both take a long time to run… please review the files beforehand. Making your own CAGIS database is not for the faint of heart.</em></p>
+</div>
+</div>
+<div id="geocoding" class="section level2">
+<h2>Geocoding</h2>
+<div id="address-string-formatting" class="section level4">
+<h4>Address String Formatting</h4>
+<ul>
+<li>An address must be submitted as a single string</li>
+<li>The city and state are optional and not used for geocoding.</li>
+<li>Street number, street name, and zip code must be in the address string.</li>
+<li>Street numbers must be numeric (i.e. “18”, not “Eighteen”).</li>
+</ul>
+</div>
+<div id="example-usage" class="section level4">
+<h4>Example usage</h4>
+<p>Here, I am using the argument <code>cole=T</code> to specify my own executable path for python for my local machine. This should usually be omitted, in which case it will default to <code>FALSE</code> and try to guess the python path automatically.</p>
+<p>Single address with only coordinates:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(geocodeCAGIS)
+<span class="kw">geocodeCAGIS</span>(<span class="st">'3333 Burnet Ave, Cincinnati, OH 45229'</span>,<span class="dt">cole=</span>T)</code></pre></div>
+<pre><code>##           lat          lon
+## 1 39.14116934 -84.50238459</code></pre>
+<p>Include all optional output:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">geocodeCAGIS</span>(<span class="st">'3333 Burnet Ave, Cincinnati, OH 45229'</span>,
+             <span class="dt">return.score=</span><span class="ot">TRUE</span>,
+             <span class="dt">return.call=</span><span class="ot">TRUE</span>,
+             <span class="dt">return.match=</span><span class="ot">TRUE</span>,
+             <span class="dt">cole=</span>T)</code></pre></div>
+<pre><code>##           lat          lon method score
+## 1 39.14116934 -84.50238459  CAGIS     1
+##                                    call                match
+## 1 3333 burnet ave, cincinnati, oh 45229 3333 burnet 45229 av</code></pre>
+<p>Specify an alternate python executable path:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">geocodeCAGIS</span>(<span class="st">'3333 Burnet Ave, Cincinnati, OH 45229'</span>,
+             <span class="dt">python.system.location=</span><span class="st">'/Library/Frameworks/Python.framework/Versions/2.7/bin/python'</span>)</code></pre></div>
+<pre><code>##           lat          lon
+## 1 39.14116934 -84.50238459</code></pre>
+</div>
+</div>
+<div id="batch-geocoding" class="section level2">
+<h2>Batch Geocoding</h2>
+<p>This package comes with an executable <code>Rscript</code> file that can be run to batch geocode a CSV file. Find the location of the file by running the following in R:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.file</span>(<span class="kw">file.path</span>(<span class="st">'extdata/batch_geocodeCAGIS.R'</span>),<span class="dt">package=</span><span class="st">'geocodeCAGIS'</span>)</code></pre></div>
+<pre><code>## [1] &quot;/Users/cole/Documents/Biostatistics/MIDH/geocodeCAGIS/inst/extdata/batch_geocodeCAGIS.R&quot;</code></pre>
+<p>Make sure to <code>chmod</code> the script to make it executable and then look over the help options:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">chmod</span> +x /Library/Frameworks/R.framework/Versions/3.2/Resources/library/geocodeCAGIS/extdata/batch_geocodeCAGIS.R
+<span class="kw">/Library/Frameworks/R.framework/Versions/3.2/Resources/library/geocodeCAGIS/extdata/batch_geocodeCAGIS.R</span> --help</code></pre></div>
+<pre><code>## Loading required package: methods
+## usage: /Library/Frameworks/R.framework/Versions/3.2/Resources/library/geocodeCAGIS/extdata/batch_geocodeCAGIS.R [--] [--help] [--opts OPTS] file_name column_name
+## 
+## offline geocoding, returns the input file with geocodes appended
+## 
+## positional arguments:
+##   file_name          name of input csv file
+##   column_name            the name of the column in the csv file that contains the address strings
+## 
+## flags:
+##   -h, --help         show this help message and exit
+## 
+## optional arguments:
+##   -x, --opts OPTS            RDS file containing argument values</code></pre>
+<p>Although not evaluated here, the script will print out its status and then save the geocode information along with the original file as a CSV and also SHP file.</p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
