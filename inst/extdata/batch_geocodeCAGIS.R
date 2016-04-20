@@ -29,6 +29,6 @@ write.csv(out.file,out.file.name,row.names=F)
 
 system(paste0('csv_to_shp ',out.file.name))
 
-print(paste0('FINISHED! \n    output written to ',out.file.name,'\n and to folder ',paste0(gsub('.csv','',out.file.name,fixed=TRUE)),' as a shapefile'))
+print(paste0('FINISHED! output written to ',out.file.name,'and to folder ',paste0(gsub('.csv','',out.file.name,fixed=TRUE)),' as a shapefile'))
 
 
