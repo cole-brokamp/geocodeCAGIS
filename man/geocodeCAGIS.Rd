@@ -35,13 +35,12 @@ The \code{sysdata.rda} file comes bundled with the package. Alternatively,
 build the system data file on your own, using updated CAGIS files. See
 the vignette for details on this operation.
 
-This function will generate an error if the zip code of the address string
+This function will return NA if the zip code of the address string
 does not begin with 450, 451, or 452.
 }
 \examples{
 # geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
 # geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',return.score=TRUE,return.call=TRUE,return.match=TRUE)
-## will generate error:
 #geocodeCAGIS('1456 Main St. 23566',cole=TRUE)
 }
 

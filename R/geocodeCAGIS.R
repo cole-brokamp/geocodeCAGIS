@@ -11,7 +11,7 @@
 #' build the system data file on your own, using updated CAGIS files. See
 #' the vignette for details on this operation.
 #'
-#' This function will generate an error if the zip code of the address string
+#' This function will return NA if the zip code of the address string
 #' does not begin with 450, 451, or 452.
 #'
 #' @param address_string a single string that will be geocoded
@@ -27,7 +27,6 @@
 #' @examples
 #' # geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
 #' # geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',return.score=TRUE,return.call=TRUE,return.match=TRUE)
-#' ## will generate error:
 #' #geocodeCAGIS('1456 Main St. 23566',cole=TRUE)
 
 geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return.match=FALSE,...) {
@@ -37,7 +36,7 @@ geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return
   addr_string <- tolower(addr_string)
   address.p <- addr_parse(addr_string,...)
 
-  stopifnot(substr(address.p$ZipCode,1,3) %in% c(450,451,452))
+  if(!substr(address.p$ZipCode,1,3) %in% c(450,451,452)) return(NA)
 
   # remove city and state
   address.p$PlaceName <- NULL
