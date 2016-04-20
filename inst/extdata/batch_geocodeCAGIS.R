@@ -20,7 +20,7 @@ geocoded <- CB::CBapply(addresses.unique,function(x) {
   geocodeCAGIS(x,return.score=TRUE,return.call=FALSE,return.match=TRUE)
   })
 
-geocoded$address_call <- row.names(geocoded)
+geocoded$address_call <- addresses.unique
 
 out.file <- merge(addresses,geocoded,by.x=address.col.name,by.y='address_call',all=TRUE)
 
