@@ -46,9 +46,10 @@ geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return
   address.p <- address.p[!sapply(address.p,is.na)]
 
   # make candidates based on fuzzy join
+  common.names <- intersect(names(CAGIS.parsed),names(address.p))
   osa.candidates <- fuzzyjoin::stringdist_left_join(address.p,
-                                                    na.omit(CAGIS.parsed[ ,c(names(address.p),'LATITUDE','LONGITUDE')]),
-                                                    by = names(address.p),
+                                                    na.omit(CAGIS.parsed[ ,c(common.names,'LATITUDE','LONGITUDE')]),
+                                                    by = common.names,
                                                     method='osa',ignore_case=TRUE)
   candidates <- osa.candidates[ ,c(grep('.y',names(osa.candidates),value=TRUE,fixed=TRUE),'LATITUDE','LONGITUDE')] # keep just matches
   names(candidates) <- gsub('.y','',names(candidates),fixed=TRUE) # remove .y from names

@@ -11,7 +11,7 @@ args <- parse_args(p)
 in.file <- args$file_name
 address.col.name <- args$column_name
 
-addresses <- read.csv(in.file,stringsAsFactors=FALSE)
+addresses <- read.csv(in.file,stringsAsFactors=FALSE,na.strings=c('',' '))
 
 addresses.unique <- unique(addresses[ ,address.col.name])
 
