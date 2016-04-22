@@ -52,6 +52,7 @@ geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return
                                                     by = common.names,
                                                     method='osa',ignore_case=TRUE)
   candidates <- osa.candidates[ ,c(grep('.y',names(osa.candidates),value=TRUE,fixed=TRUE),'LATITUDE','LONGITUDE')] # keep just matches
+  if (is.na(candidates$LATITUDE)) return(NA)
   names(candidates) <- gsub('.y','',names(candidates),fixed=TRUE) # remove .y from names
   candidates <- as.data.frame(sapply(candidates,function(x) tolower(as.character(x))),
                               stringsAsFactors=FALSE) # make all char
@@ -70,7 +71,7 @@ geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return
     out$score <- dist.matrix[best.candidate,'total.weighted.distance']
   }
   if (return.call) out$call <- addr_string
-  if (return.match) out$match <- paste(candidates[best.candidate,names(address.p)],collapse=' ')
+  if (return.match) out$match <- paste(candidates[best.candidate,common.names],collapse=' ')
   return(out)
 }
 
