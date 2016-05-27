@@ -15,10 +15,10 @@ addresses <- read.csv(in.file,stringsAsFactors=FALSE,na.strings=c('',' '))
 
 addresses.unique <- unique(addresses[ ,address.col.name])
 
-geocoded <- CB::CBapply(addresses.unique,function(x) {
-  print(paste0('geocoding ',tail(which(addresses.unique==x),1),' of ',length(addresses.unique)))
+geocoded <- CB::cb_apply(addresses.unique,function(x) {
+  # print(paste0('geocoding ',tail(which(addresses.unique==x),1),' of ',length(addresses.unique)))
   tryCatch(geocodeCAGIS(x,return.score=TRUE,return.call=FALSE,return.match=TRUE),error=function(e)NULL)
-  })
+  },parallel=TRUE)
 
 geocoded$address_call <- addresses.unique
 
