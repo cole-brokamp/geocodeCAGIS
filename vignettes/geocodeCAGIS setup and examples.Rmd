@@ -10,7 +10,7 @@ vignette: >
 ---
 ## Overview
 
-This package is designed to geocode address strings that are private health information.  Most institutional review boards will not allow the use of online geocoders. This program maintains HIPPA compliance by exact address matching using offline data from the Cincinnati Area Geographic Information System ([CAGIS](http://cagismaps.hamilton-co.org/cagisportal)). This drastically improves geocoding, but is only available for addresses that have a zipcode beginning with 450, 451, or 452. 
+This package is designed to geocode address strings that are private health information.  Most institutional review boards will not allow the use of online geocoders. This program maintains HIPPA compliance by exact address matching using offline data from the Cincinnati Area Geographic Information System ([CAGIS](http://cagismaps.hamilton-co.org/cagisportal)). This drastically improves geocoding accuracy, but is only available for addresses that have a zipcode beginning with 450, 451, or 452. 
     
 ## Installing
 
