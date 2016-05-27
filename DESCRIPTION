@@ -12,5 +12,7 @@ RoxygenNote: 5.0.1
 Suggests: knitr,
     rmarkdown
 Imports: fuzzyjoin,
-    findpython
+    findpython,
+    CB
+Remotes: cole-brokamp/CB
 VignetteBuilder: knitr
