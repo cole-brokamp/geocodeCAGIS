@@ -17,7 +17,8 @@ addresses.unique <- unique(addresses[ ,address.col.name])
 
 geocoded <- CB::cb_apply(addresses.unique,function(x) {
   # print(paste0('geocoding ',tail(which(addresses.unique==x),1),' of ',length(addresses.unique)))
-  tryCatch(geocodeCAGIS(x,return.score=TRUE,return.call=FALSE,return.match=TRUE),error=function(e)NULL)
+  tryCatch(geocodeCAGIS(x,return.score=TRUE,return.call=FALSE,return.match=TRUE),
+           error=function(e)data.frame('lat'=NA))
   },parallel=TRUE,fill=FALSE,pb=TRUE)
 
 geocoded$address_call <- addresses.unique
