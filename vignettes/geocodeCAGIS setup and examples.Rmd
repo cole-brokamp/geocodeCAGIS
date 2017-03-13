@@ -6,8 +6,9 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
+
 ## Overview
 
 This package is designed to geocode address strings that are private health information.  Most institutional review boards will not allow the use of online geocoders. This program maintains HIPPA compliance by exact address matching using offline data from the Cincinnati Area Geographic Information System ([CAGIS](http://cagismaps.hamilton-co.org/cagisportal)). This drastically improves geocoding accuracy, but is only available for addresses that have a zipcode beginning with 450, 451, or 452. 
@@ -18,7 +19,7 @@ This package is designed to geocode address strings that are private health info
 
 Install the package by running the following in `R`:
 
-`devtools::install_github('cole-brokamp','geocodeCAGIS')`
+`remotes::install_github('cole-brokamp/geocodeCAGIS')`
 
 #### Python
 
@@ -39,8 +40,8 @@ Make sure to `R CMD BATCH --vanilla make_sysdata.R` and rebuild the package with
 #### Address String Formatting
 
 - An address must be submitted as a single string
-- The city and state are optional and not used for geocoding. 
-- Street number, street name, and zip code must be in the address string. 
+- The city and state are optional and not used for geocoding.
+- Street number, street name, and zip code must be in the address string.
 - Street numbers must be numeric (i.e. "18", not "Eighteen").
 
 #### Example usage
@@ -59,24 +60,12 @@ geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',
              return.match=TRUE)
 ```
 
-Specify an alternate python executable path:
-```{r}
-geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
-```
-
 ## Batch Geocoding
 
 This package comes with an executable `Rscript` file that can be run to batch geocode a CSV file.  Find the location of the file by running the following in R:
+
 ```{r}
 system.file(file.path('extdata/batch_geocodeCAGIS.R'),package='geocodeCAGIS')
 ```
 
-Make sure to `chmod` the script to make it executable and then look over the options:
-
-```{r, engine='bash'}
-chmod +x /Library/Frameworks/R.framework/Versions/3.2/Resources/library/geocodeCAGIS/extdata/batch_geocodeCAGIS.R
-/Library/Frameworks/R.framework/Versions/3.2/Resources/library/geocodeCAGIS/extdata/batch_geocodeCAGIS.R --help
-```
-
-Although not evaluated here, the script will print out its status and then save the geocode information along with the original file as a CSV and also SHP file.
-
+Make sure to `chmod` the script to make it executable and then run it to look over the options.
