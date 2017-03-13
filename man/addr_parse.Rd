@@ -30,6 +30,5 @@ install this module after python is installed.
 \examples{
 addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
 addr_parse('737 US 50 Cincinnati OH 45150')
-addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
 }
 

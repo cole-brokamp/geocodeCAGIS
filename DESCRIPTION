@@ -4,9 +4,9 @@ Title: Geocode CAGIS
 Version: 0.1
 Author: Cole Brokamp
 Maintainer: Cole Brokamp <cole.brokamp@gmail.com>
-Description: Uses data from CAGIS to geocode local Cincinnati, Ohio address
+Description: Uses data from CAGIS to geocode local Cincinnati, Ohio addresses
     using offline files.
-License: GPL
+License: MIT + file LICENSE
 LazyData: TRUE
 RoxygenNote: 5.0.1
 Suggests: knitr,

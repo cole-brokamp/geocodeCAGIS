@@ -41,6 +41,6 @@ See \link{addr_parse} for more details.
 \examples{
 # geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
 # geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',return.score=TRUE,return.call=TRUE,return.match=TRUE)
-#geocodeCAGIS('1456 Main St. 23566',cole=TRUE)
+#geocodeCAGIS('1456 Main St. 23566')
 }
 

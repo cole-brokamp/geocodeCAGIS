@@ -21,7 +21,6 @@
 #' @examples
 #' addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
 #' addr_parse('737 US 50 Cincinnati OH 45150')
-#' addr_parse('3333 Burnet Ave, Cincinnati, OH 45229')
 
 addr_parse <- function(address.string) {
   py.bin.loc <- findpython::find_python_cmd(required_modules='usaddress',

@@ -9,7 +9,7 @@ d <- d[!grepl('I-',x=d$address), ]
 
 
 # parse all using python program
-source('run/addr_parse.R')
+source('R/addr_parse.R')
 d.parse <- CB::CBapply(d$address,addr_parse,fill=TRUE,num.cores=4)
 
 CAGIS.parsed <- cbind(d,d.parse)

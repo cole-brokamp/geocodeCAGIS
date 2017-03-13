@@ -15,22 +15,18 @@ addresses <- read.csv(in.file,stringsAsFactors=FALSE,na.strings=c('',' '))
 
 addresses.unique <- unique(addresses[ ,address.col.name])
 
-geocoded <- CB::cb_apply(addresses.unique,function(x) {
-  # print(paste0('geocoding ',tail(which(addresses.unique==x),1),' of ',length(addresses.unique)))
-  tryCatch(geocodeCAGIS(x,return.score=TRUE,return.call=FALSE,return.match=TRUE),
-           error=function(e)data.frame('lat'=NA))
-  },parallel=TRUE,fill=FALSE,pb=TRUE)
+geocoded <- CB::cb_apply(addresses.unique,geocodeCAGIS,
+			 return.score=TRUE,return.call=FALSE,return.match=TRUE,
+			 parallel=TRUE,fill=TRUE,pb=TRUE,cache=TRUE,pb=TRUE,
+			 error.na=TRUE)
 
 geocoded$address_call <- addresses.unique
 
 out.file <- merge(addresses,geocoded,by.x=address.col.name,by.y='address_call',all=TRUE)
 
-out.file.name <- paste0(gsub('.csv','',in.file,fixed=TRUE),'_geocoded.csv')
+out.file.name <- paste0(gsub('.csv','',in.file,fixed=TRUE),'_CAGISgeocoded.csv')
 write.csv(out.file,out.file.name,row.names=F)
 
-# system(paste0('csv_to_shp ',out.file.name))
-
-# print(paste0('FINISHED! output written to ',out.file.name,'and to folder ',paste0(gsub('.csv','',out.file.name,fixed=TRUE)),' as a shapefile'))
 print(paste0('FINISHED! output written to ',out.file.name))
 
 

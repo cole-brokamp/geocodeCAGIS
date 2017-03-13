@@ -28,7 +28,7 @@
 #' @examples
 #' # geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229')
 #' # geocodeCAGIS('3333 Burnet Ave, Cincinnati, OH 45229',return.score=TRUE,return.call=TRUE,return.match=TRUE)
-#' #geocodeCAGIS('1456 Main St. 23566',cole=TRUE)
+#' #geocodeCAGIS('1456 Main St. 23566')
 
 geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return.match=FALSE) {
 
@@ -37,7 +37,10 @@ geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return
   addr_string <- tolower(addr_string)
   address.p <- addr_parse(addr_string)
 
-  if(!substr(address.p$ZipCode,1,3) %in% c(450,451,452)) return(NA)
+  if(!substr(address.p$ZipCode,1,3) %in% c(450,451,452)) {
+	  message('warning: zip code does not begin with 450, 451, or 452; returning NA')
+	  return(NA)
+  }
 
   # remove city and state
   address.p$PlaceName <- NULL
@@ -52,7 +55,7 @@ geocodeCAGIS <- function(addr_string,return.score=FALSE,return.call=FALSE,return
                                                     by = common.names,
                                                     method='osa',ignore_case=TRUE)
   candidates <- osa.candidates[ ,c(grep('.y',names(osa.candidates),value=TRUE,fixed=TRUE),'LATITUDE','LONGITUDE')] # keep just matches
-  if (is.na(candidates$LATITUDE[1])) return(NA)
+  if (is.na(candidates$LATITUDE[1])) return(NA) # return NA if no matches
   names(candidates) <- gsub('.y','',names(candidates),fixed=TRUE) # remove .y from names
   candidates <- as.data.frame(sapply(candidates,function(x) tolower(as.character(x))),
                               stringsAsFactors=FALSE) # make all char
