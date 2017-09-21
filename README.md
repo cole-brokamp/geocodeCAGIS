@@ -1,3 +1,5 @@
+### THIS SOFTWARE IS NO LONGER MAINTAINED AND HAS BEEN REPLACED WITH THE R PACKAGE "hamilton", AVAILABLE AT [https://github.com/cole-brokamp/hamilton](https://github.com/cole-brokamp/hamilton)
+
 [![DOI](https://zenodo.org/badge/21831/cole-brokamp/geocodeCAGIS.svg)](https://zenodo.org/badge/latestdoi/21831/cole-brokamp/geocodeCAGIS)
 
 # geocodeCAGIS
